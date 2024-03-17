@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div id="flashcardFront" class="box cardFront">
+    <p class="block titlebar">Front</p>
+    <form hx-get="/flashcard">
+        <p>{{ front }}</p>
+        <label for="translation">Enter the translation</label>
+        <input id="translation" type="text" placeholder="translation">
+        <button type="submit" onclick="toggle()">Submit</button>
+    </form>
+</div>
+
+<div id="incorrectDiv" class="box bad cardBack" style="display: none;">
+    <p class="block titlebar">Back</p>
+    <h1>Incorrect</h1>
+    <p>correct answer was {{ back }}</p>
+    <button>Next Flashcard</button>
+</div>
+
+<div id="correctDiv" class="box ok cardBack" style="display: none;">
+    <p class="block titlebar">Back</p>
+    <h1>Correct!</h1>
+    <p>{{ back }} was correct</p>
+    <button hx-get="/flashcard" hx-target="#flashcardFront">Next Flashcard</button>
+</div>
+
+
+<script>
+    function toggle() {
+        document.getElementById("flashcardFront").style.display = 'none';
+        document.getElementById("correctDiv").style.display = 'block';
+    }
+</script>
+
+{% endblock %}
