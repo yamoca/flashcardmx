@@ -10,8 +10,11 @@ lazy_static! {
     };
 }
 
+mod datahandler;
+
 #[get("/")]
 async fn hello() -> impl Responder {
+    datahandler::openfile(); 
     let mut context = tera::Context::new();
     context.insert("front", "porto");
     context.insert("back", "i carry");
@@ -19,8 +22,15 @@ async fn hello() -> impl Responder {
     HttpResponse::Ok().body(page_content)
 }
 
-#[post("/echo")]
-async fn echo(req_body: String) -> impl Responder {
+#[get("/flashcard")]
+async fn flashcard() -> impl Responder {
+    println!("next flashcard fetched");
+    HttpResponse::Ok().body("test")
+}
+
+#[post("/check")]
+async fn check(req_body: String) -> impl Responder {
+    println!("checking current flashcard: user answered {:?}", req_body);
     HttpResponse::Ok().body(req_body)
 }
 
@@ -29,7 +39,8 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
             .service(hello)
-            .service(echo)
+            .service(flashcard)
+            .service(check)
     })
     .bind(("127.0.0.1", 8080))?
     .run()

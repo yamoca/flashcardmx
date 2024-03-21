@@ -4,10 +4,10 @@
 
 <div id="flashcardFront" class="box cardFront">
     <p class="block titlebar">Front</p>
-    <form hx-get="/flashcard">
+    <form hx-post="/check">
         <p>{{ front }}</p>
         <label for="translation">Enter the translation</label>
-        <input id="translation" type="text" placeholder="translation">
+        <input id="translation" type="text" placeholder="translation" value="">
         <button type="submit" onclick="toggle()">Submit</button>
     </form>
 </div>

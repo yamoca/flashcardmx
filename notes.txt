@@ -1,0 +1,2 @@
+maybe actually resend html (when switching between card front and card back) from backend
+is this the more htmx-ful way to do it??
